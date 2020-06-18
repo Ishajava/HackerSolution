@@ -1,0 +1,97 @@
+import java.io.*;
+import java.math.*;
+import java.security.*;
+import java.text.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    // Complete the timeInWords function below.
+    static String timeInWords(int h, int m) {
+                String[] data = {
+                "zero",
+                "one",
+                "two",
+                "three",
+                "four",
+                "five",
+                "six",
+                "seven",
+                "eight",
+                "nine",
+                "ten",
+
+                "eleven",
+                "twelve",
+                "thirteen",
+                "fourteen",
+                "quarter",
+                "sixteen",
+                "seventeen",
+                "eighteen",
+                "nineteen",
+                "twenty",
+
+                "twenty one",
+                "twenty two",
+                "twenty three",
+                "twenty four",
+                "twenty five",
+                "twenty six",
+                "twenty seven",
+                "twenty eight",
+                "twenty nine",
+                "thirty"
+        };
+        String min = "minutes";
+        if(m==1 || (60-m)==1){min = "minute";}
+        String ans = "";
+        if (m == 0) {
+            ans = data[h] + " o' clock";
+        } else {
+            if (m == 30) {
+                ans = "half past " + data[h];
+            } else if (m > 30) {
+                if ((m - 30) == 15) {
+                    ans = data[15] + " to " + data[h + 1];
+                } else {
+                    if(h==12){
+                        h=0;
+                    }
+                    ans = data[60 - m] + " "+min+" to " + data[h + 1];
+                }
+            } else {
+                if (m == 15) {
+                    ans = data[15] + " past " + data[h];
+                } else {
+                    ans = data[m] + " "+min+" past " + data[h];
+                }
+            }
+        }
+        return ans;
+    }
+
+
+    private static final Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) throws IOException {
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+
+        int h = scanner.nextInt();
+        scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
+
+        int m = scanner.nextInt();
+        scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
+
+        String result = timeInWords(h, m);
+
+        bufferedWriter.write(result);
+        bufferedWriter.newLine();
+
+        bufferedWriter.close();
+
+        scanner.close();
+    }
+}
